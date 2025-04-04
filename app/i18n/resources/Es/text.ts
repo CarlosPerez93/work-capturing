@@ -1,4 +1,5 @@
 export const Texts = {
-    home: 'Inicio',
+    main: 'Principal',
     about: 'Acerca de',
+    loading: '...Cargando',
 }

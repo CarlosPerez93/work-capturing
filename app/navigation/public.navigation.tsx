@@ -21,29 +21,31 @@ export const PublicNavigationTab = () => {
     const { formatMessage } = useIntl()
     const { colorMode } = useColorMode()
     const themeColor = colorMode === 'dark' ? 'dark' : 'light'
-    console.log(colorMode)
 
     return (
-        <Suspense fallback={<Loading message={formatMessage({ id: 'loading' })} />}>
+        <Suspense
+            fallback={<Loading message={formatMessage({ id: 'texts.loading' })} />}
+        >
             <Tab.Navigator
-                initialRouteName='home'
+                initialRouteName={formatMessage({ id: 'texts.main' })}
                 screenOptions={{
                     tabBarActiveTintColor: themeColor,
                     tabBarStyle: { position: 'absolute' },
-                    headerShown: true,
-                    header: () => (
-                        <Flex direction='row'>
-                            <SelectDarkMode />
-                            <SelectLanguage />
-                        </Flex>
-                    ),
+                    headerShown: false,
                 }}
             >
                 <Tab.Screen
-                    name='home'
+                    name={formatMessage({ id: 'texts.main' })}
                     component={Home}
-                    initialParams={{ colorMode }} // Pasa colorMode y otras props
+                    initialParams={{ colorMode }}
                     options={{
+                        header: () => (
+                            <Flex direction='row' justifyContent={'space-between'}>
+                                <SelectLanguage />
+                                <SelectDarkMode />
+                            </Flex>
+                        ),
+                        headerShown: true,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons
                                 name='home'
@@ -54,9 +56,9 @@ export const PublicNavigationTab = () => {
                     }}
                 />
                 <Tab.Screen
-                    name='about'
+                    name={formatMessage({ id: 'texts.about' })}
                     component={About}
-                    initialParams={{ colorMode }} // Pasa colorMode y otras props
+                    initialParams={{ colorMode }}
                     options={{
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons

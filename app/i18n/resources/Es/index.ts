@@ -1,6 +1,6 @@
+import { Texts } from './text'
 import { Button } from './button'
 import { Language } from './language'
-import { Texts } from './text'
 
 export const ES = {
     button: Button,
