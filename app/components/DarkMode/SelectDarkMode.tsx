@@ -1,14 +1,21 @@
-import { Box, Switch, useColorMode } from 'native-base'
+import { Feather } from '@expo/vector-icons'
+import { Box, Icon, useColorMode } from 'native-base'
+import { styles } from './styles'
 
 export const SelectDarkMode = () => {
     const { colorMode, toggleColorMode } = useColorMode()
-    const isChecked = colorMode === 'dark'
-
-    return (
-        <Box w='1/4' maxH={50} maxW={50}>
-            <Switch onToggle={toggleColorMode} isChecked={isChecked} />
+    const renderIconTheme = () => (
+        <Box style={styles.box}>
+            <Icon
+                as={Feather}
+                name={colorMode === 'dark' ? 'sun' : 'moon'}
+                style={styles.icon}
+                onPress={toggleColorMode}
+            />
         </Box>
     )
+
+    return renderIconTheme()
 }
 
 export default SelectDarkMode
