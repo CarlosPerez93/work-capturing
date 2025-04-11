@@ -6,7 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import i18n from './i18n/config'
 import { customTheme } from './utils/constants/theme.constant'
 import { Exo, Poppins } from './utils/constants/fonts.constant'
-import PublicNavigationTab from './navigation/public.navigation'
+import { PublicStackNavigation } from './navigation/public.navigation'
 import { colorModeManager } from './utils/constants/functions/colorMode.utils'
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
                     theme={customTheme}
                     colorModeManager={colorModeManager}
                 >
-                    <PublicNavigationTab />
+                    <PublicStackNavigation />
                 </NativeBaseProvider>
             </SafeAreaProvider>
         </I18nextProvider>
