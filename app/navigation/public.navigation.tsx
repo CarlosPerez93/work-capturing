@@ -7,7 +7,7 @@ import { Loading } from '../components/Loading/Loading'
 import { useIntl } from '../hooks/useIntl'
 import { customTheme } from '../utils/constants/theme.constant'
 
-export const PublicNavigationTab = () => {
+export const PublicStackNavigation = () => {
     const { formatMessage } = useIntl()
     const { colorMode } = useColorMode()
     const {
@@ -26,4 +26,4 @@ export const PublicNavigationTab = () => {
     )
 }
 
-export default PublicNavigationTab
+export default PublicStackNavigation
