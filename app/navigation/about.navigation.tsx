@@ -1,13 +1,14 @@
 import { Suspense } from 'react'
 import { StatusBar, useColorMode } from 'native-base'
 
-import { RootStack } from '../navigator/rootNavigator'
+import { HomeStack } from '../navigator/homeStackNavigator'
 import { Loading } from '../components/Loading/Loading'
 
 import { useIntl } from '../hooks/useIntl'
 import { customTheme } from '../utils/constants/theme.constant'
+import { AboutStack } from '../navigator/aboutStackNavigator'
 
-export const PublicStackNavigation = () => {
+export const AboutStackNavigation = () => {
     const { formatMessage } = useIntl()
     const { colorMode } = useColorMode()
     const {
@@ -20,10 +21,9 @@ export const PublicStackNavigation = () => {
         <Suspense
             fallback={<Loading message={formatMessage({ id: 'texts.loading' })} />}
         >
-            <RootStack bg={bg} txt={txt} />
-            <StatusBar backgroundColor={bg} barStyle={txt} />
+            <AboutStack bg={bg} txt={txt} />
         </Suspense>
     )
 }
 
-export default PublicStackNavigation
+export default AboutStackNavigation

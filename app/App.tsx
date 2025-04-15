@@ -6,8 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import i18n from './i18n/config'
 import { customTheme } from './utils/constants/theme.constant'
 import { Exo, Poppins } from './utils/constants/fonts.constant'
-import { PublicStackNavigation } from './navigation/public.navigation'
 import { colorModeManager } from './utils/constants/functions/colorMode.utils'
+import NavigationDrawer from './components/NavigationDrawer'
 
 export default function App() {
     const [loaded] = useFonts({ Exo, Poppins })
@@ -19,7 +19,7 @@ export default function App() {
                     theme={customTheme}
                     colorModeManager={colorModeManager}
                 >
-                    <PublicStackNavigation />
+                    <NavigationDrawer />
                 </NativeBaseProvider>
             </SafeAreaProvider>
         </I18nextProvider>

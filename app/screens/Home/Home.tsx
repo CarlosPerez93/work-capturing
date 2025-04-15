@@ -14,10 +14,8 @@ export const Home = ({ ...props }) => {
     const navigation = useNavigation<HomeScreenNavigationProp>()
     return (
         <Box bg={bg} h={'full'}>
-            <Text color={colorMode === 'dark' ? 'dark.text' : 'light.text'}>
-                {formatMessage({ id: 'texts.main' })}
-            </Text>
-            <Button
+            <Text
+                color={colorMode === 'dark' ? 'dark.text' : 'light.text'}
                 onPress={() =>
                     navigation.navigate(
                         formatMessage({
@@ -26,10 +24,8 @@ export const Home = ({ ...props }) => {
                     )
                 }
             >
-                <Text color={colorMode === 'dark' ? 'dark.text' : 'light.text'}>
-                    {formatMessage({ id: 'texts.about' })}
-                </Text>
-            </Button>
+                {formatMessage({ id: 'texts.main' })}
+            </Text>
         </Box>
     )
 }
