@@ -1,5 +1,9 @@
 // theme.ts
 import { extendTheme } from 'native-base'
+import type { StatusBarStyle } from 'react-native'
+
+export const lightStatusBar: StatusBarStyle = 'light-content'
+export const darkStatusBar: StatusBarStyle = 'dark-content'
 
 export const customTheme = extendTheme({
     colors: {
@@ -19,11 +23,13 @@ export const customTheme = extendTheme({
             bg: '#121212',
             text: '#FFFFFF',
             card: '#1E1E1E',
+            darkContent: darkStatusBar,
         },
         light: {
             bg: '#FFFFFF',
             text: '#000000',
             card: '#F0F0F0',
+            lightContent: lightStatusBar,
         },
     },
     components: {

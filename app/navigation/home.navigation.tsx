@@ -15,7 +15,7 @@ export const HomeStackNavigation = () => {
     } = customTheme
 
     const bg = colorMode === 'dark' ? dark.bg : light.bg
-    const txt = colorMode === 'light' ? 'dark-content' : 'light-content'
+    const txt = colorMode === 'light' ? dark.text : light.text
     return (
         <Suspense
             fallback={<Loading message={formatMessage({ id: 'texts.loading' })} />}

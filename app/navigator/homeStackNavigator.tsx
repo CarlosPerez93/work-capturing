@@ -10,17 +10,13 @@ const { Navigator, Screen } = createStackNavigator<RootStackParamList>()
 export function HomeStack({ ...props }) {
     const { bg, txt } = props
     const { formatMessage } = useIntl()
-
-    const config = {
-        headerStyle: { backgroundColor: bg, bg: txt },
-    }
+    console.log(txt)
     type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'about'>
 
     const navigation = useNavigation<HomeScreenNavigationProp>()
 
     return (
         <Navigator
-            screenOptions={config}
             initialRouteName={
                 formatMessage({ id: 'texts.main' }) as keyof RootStackParamList
             }
@@ -32,7 +28,9 @@ export function HomeStack({ ...props }) {
                 children={() => <Home bg={bg} txt={txt} />}
                 options={{
                     title: formatMessage({ id: 'texts.main' }),
-                    headerShown: false,
+                    headerStyle: { backgroundColor: bg },
+                    headerTintColor: txt,
+                    headerTitleStyle: { fontWeight: 'bold' },
                 }}
             />
             <Screen
