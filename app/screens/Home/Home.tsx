@@ -3,12 +3,19 @@ import * as FileSystem from 'expo-file-system'
 import { Alert, FlatList, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '@/app/utils/types/types.routes'
 
 export const Home = ({ ...props }) => {
     const { colorMode } = useColorMode()
+    const { bg, txt } = props
     const [folders, setFolders] = useState<string[]>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [folderName, setFolderName] = useState<string>('')
+    type FolderScreen = StackNavigationProp<RootStackParamList, 'folder'>
+    const navigation = useNavigation<FolderScreen>()
+
     const createFile = async () => {
         const routeFolder = `${FileSystem.documentDirectory}/newStationWork/${folderName}`
         try {
@@ -49,31 +56,27 @@ export const Home = ({ ...props }) => {
     useEffect(() => {
         fetchFolders()
     }, [])
+
+    const handleFolder = (folderName: string) =>
+        navigation.navigate('folder', { params: { folderName } })
+
     return (
-        <Box bg={colorMode === 'dark' ? 'dark.bg' : 'light.bg'} h={'full'}>
-            <Text color={colorMode === 'dark' ? 'dark.text' : 'light.text'}>
-                Areas de trabajo.
-            </Text>
+        <Box bg={bg} h={'full'}>
+            <Text color={txt}>Areas de trabajo.</Text>
             <FlatList
                 data={folders}
                 keyExtractor={item => item}
                 renderItem={({ item }) => (
                     <TouchableOpacity
+                        onPress={() => handleFolder(item)}
                         style={{
                             flexDirection: 'row',
                             alignItems: 'center',
                             marginVertical: 8,
                         }}
                     >
-                        <MaterialIcons
-                            name='folder'
-                            size={24}
-                            color={colorMode === 'dark' ? '#fff' : '#000'}
-                        />
-                        <Text
-                            ml={2}
-                            color={colorMode === 'dark' ? 'dark.text' : 'light.text'}
-                        >
+                        <MaterialIcons name='folder' size={24} color={txt} />
+                        <Text ml={2} color={txt}>
                             {item}
                         </Text>
                     </TouchableOpacity>

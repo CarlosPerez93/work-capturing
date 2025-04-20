@@ -18,11 +18,11 @@ export default function App() {
     } = customTheme
 
     const bg =
-        colorMode === 'light'
+        colorMode === 'dark'
             ? customTheme.colors.dark.bg
             : customTheme.colors.light.bg
 
-    const txt = colorMode === 'dark' ? dark.darkContent : light.lightContent
+    const txt = colorMode === 'light' ? dark.darkContent : light.lightContent
 
     return loaded ? (
         <I18nextProvider i18n={i18n}>
@@ -31,8 +31,8 @@ export default function App() {
                     theme={customTheme}
                     colorModeManager={colorModeManager}
                 >
-                    <HomeStackNavigation />
                     <StatusBar backgroundColor={bg} barStyle={txt} />
+                    <HomeStackNavigation />
                 </NativeBaseProvider>
             </SafeAreaProvider>
         </I18nextProvider>
