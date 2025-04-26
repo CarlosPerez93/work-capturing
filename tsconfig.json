@@ -1,11 +1,13 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true,
-    "module": "ESNext",
-    "paths": {
-      "@/*": ["./*"]
-    }
-  },
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "moduleResolution": "bundler",
+        "strictNullChecks": true,
+        "strict": true,
+        "module": "ESNext",
+        "paths": {
+            "@/*": ["./*"]
+        }
+    },
+    "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

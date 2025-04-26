@@ -1,5 +1,5 @@
 export const Texts = {
-    main: 'Main',
-    about: 'about',
-    loading: '...loading',
+    main: 'Home',
+    about: 'About',
+    loading: '...Loading',
 }
