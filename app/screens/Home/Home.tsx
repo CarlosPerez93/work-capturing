@@ -4,12 +4,15 @@ import { Alert, FlatList, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 
+import {createFile,fetchFolders,accesFolder} from '../../utils/functions/functions'
+
 export const Home = () => {
     const { colorMode } = useColorMode();
     const [folders, setFolders] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [folderName, setFolderName] = useState<string>('');
-    const createFile = async () => {
+    const [currentFolderContents,setCurrentFolderContents]=useState<string[]>([]);
+   /*  const createFile = async () => {
         const routeFolder = `${FileSystem.documentDirectory}/newStationWork/${folderName}`;
         try {
             const existFolder = await FileSystem.getInfoAsync(routeFolder);
@@ -26,8 +29,8 @@ export const Home = () => {
         } finally{
             setIsModalOpen(false)
         }
-    }
-    const fetchFolders = async () => {
+    } */
+   /*  const fetchFolders = async () => {
         const routeFolder = `${FileSystem.documentDirectory}/newStationWork`;
         try {
             const info = await FileSystem.getInfoAsync(routeFolder);
@@ -39,10 +42,24 @@ export const Home = () => {
         } catch (error) {
             console.error('Error to list folder: ', error)
         }
-    }
+    } */
 
+   /*  const accesFolder=async (folderName:string)=>{
+        const routerFolder=`${FileSystem.documentDirectory}/newStationWork/${folderName}`
+        try{
+            const folderContents = await FileSystem.readDirectoryAsync(routerFolder);
+            setCurrentFolderContents(folderContents);
+            console.log('Contenido de la carpeta', folderContents)
+        }catch(error){
+            console.error("Error :",error)
+        }
+    } */
     useEffect(() => {
-        fetchFolders();
+        const loadFolders= async()=>{
+            const folderContents = await fetchFolders();
+            setFolders(folderContents);
+        }   
+        loadFolders();
     }, [])
     return (
         <Box bg={colorMode === 'dark' ? 'dark.bg' : 'light.bg'} h={'full'}>
@@ -51,9 +68,12 @@ export const Home = () => {
             </Text>
             <FlatList
                 data={folders}
+                ListEmptyComponent={<Text>No hay carpetas disponibles</Text>}
                 keyExtractor={(item) => item}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 8 }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 8 }}
+                    onPress={()=>accesFolder(item)}
+                    >
                         <MaterialIcons name="folder" size={24} color={colorMode === 'dark' ? '#fff' : '#000'} />
                         <Text ml={2} color={colorMode === 'dark' ? 'dark.text' : 'light.text'}>
                             {item}
@@ -89,7 +109,7 @@ export const Home = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
-                        onPress={createFile} 
+                        onPress={()=>createFile(folderName,()=>setIsModalOpen(false))} 
                         isDisabled={!folderName.trim()} 
                         bg="transparent"
                     _pressed={{ bg: "transparent" }}
