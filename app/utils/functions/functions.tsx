@@ -50,11 +50,15 @@ export const fetchFolders = async (): Promise<string[]> => {
  * @param folderName - Nombre de la carpeta.
  */
 export const accesFolder = async (folderName: string) => {
+    if (!folderName || typeof folderName !== 'string' || folderName.trim() === '') {
+        console.error('El nombre de la carpeta es inválido.');
+        return [];
+    }
     const routerFolder = `${FileSystem.documentDirectory}/newStationWork/${folderName}`
     try {
         const folderContents = await FileSystem.readDirectoryAsync(routerFolder);
         console.log('Contenido de la carpeta', folderContents)
-        return folderContents;
+        return folderContents || [];
     } catch (error) {
         console.error("Error :", error)
         return [];

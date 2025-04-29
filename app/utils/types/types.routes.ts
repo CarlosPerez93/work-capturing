@@ -5,4 +5,5 @@ export type RootStackParamList = {
     home: undefined
     about: undefined
     folder: NavigateArgs
+
 }

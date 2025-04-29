@@ -31,6 +31,7 @@ export const NavigationDrawer = () => {
             <Screen
                 options={{
                     title: 'Home',
+                    headerTitleAlign: 'center'
                 }}
                 component={HomeStackNavigation}
                 name={formatMessage({ id: 'texts.main' })}

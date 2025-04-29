@@ -1,13 +1,14 @@
 import { Box, Button, Text, useColorMode, View, Modal, Input } from 'native-base'
-import * as FileSystem from 'expo-file-system'
-import { Alert, FlatList, TouchableOpacity } from 'react-native'
+import { FlatList, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 
-import {createFile,fetchFolders,accesFolder} from '../../utils/functions/functions'
+import { createFile, fetchFolders, accesFolder } from '../../utils/functions/functions'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '@/app/utils/types/types.routes'
+
+
 
 export const Home = ({ ...props }) => {
     const { colorMode } = useColorMode()
@@ -18,63 +19,35 @@ export const Home = ({ ...props }) => {
     type FolderScreen = StackNavigationProp<RootStackParamList, 'folder'>
     const navigation = useNavigation<FolderScreen>()
 
-    const createFile = async () => {
-        const routeFolder = `${FileSystem.documentDirectory}/newStationWork/${folderName}`
+
+    useEffect(() => {
+        fetchFolders().then((folders) => setFolders(folders)).catch((error) => {
+            console.error('Error al cargar carpetas:', error);
+        });
+    }, []);
+
+    const handleFolder = (folderName: string) => {
+        console.log(folderName, "entro")
         try {
-            const existFolder = await FileSystem.getInfoAsync(routeFolder)
-            if (!existFolder.exists) {
-                await FileSystem.makeDirectoryAsync(routeFolder, {
-                    intermediates: true,
-                })
-                Alert.alert('Exito, carpeta creada correctamente')
-                fetchFolders()
-            } else {
-                Alert.alert(
-                    'Error, esta carpeta ya se encuentra creada con ese nombre'
-                )
-            }
+            navigation.navigate('folder', { params: { folderName } });
         } catch (error) {
-            Alert.alert('Error, problemas al crear la carpeta')
-            console.error('Comand of error: ', error)
-        } finally {
-            setIsModalOpen(false)
+            console.error('Error al acceder a la carpeta:', error);
         }
     }
-    const fetchFolders = async () => {
-        const routeFolder = `${FileSystem.documentDirectory}/newStationWork`
+
+    const handleCreateFolder = () => {
         try {
-            const info = await FileSystem.getInfoAsync(routeFolder)
-            if (info.exists) {
-                const folderContents = await FileSystem.readDirectoryAsync(
-                    routeFolder
-                )
-                setFolders(folderContents)
-            }
+            createFile(folderName, () => setIsModalOpen(false));
         } catch (error) {
-            console.error('Error to list folder: ', error)
+            console.error('Error al crear carpeta:', error);
         }
-    } 
-
-   /*  const accesFolder=async (folderName:string)=>{
-        const routerFolder=`${FileSystem.documentDirectory}/newStationWork/${folderName}`
-        try{
-            const folderContents = await FileSystem.readDirectoryAsync(routerFolder);
-            setCurrentFolderContents(folderContents);
-            console.log('Contenido de la carpeta', folderContents)
-        }catch(error){
-            console.error("Error :",error)
-        }
-    } */
-    useEffect(() => {
-        fetchFolders()
-    }, [])
-
-    const handleFolder = (folderName: string) =>
-        navigation.navigate('folder', { params: { folderName } })
-
+    }
     return (
-        <Box bg={bg} h={'full'}>
-            <Text color={txt}>Areas de trabajo.</Text>
+        <Box bg={bg} h={'full'} style={{ padding: 30 }}>
+            <View style={{ display: "flex", height: '100%', marginTop: 5 }}>
+                <Text color={txt} style={{ fontWeight: "900", fontSize: 25 }} >Areas de trabajo.</Text>
+            </View>
+
             <FlatList
                 data={folders}
                 keyExtractor={item => item}
@@ -123,7 +96,7 @@ export const Home = ({ ...props }) => {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
-                            onPress={createFile}
+                            onPress={handleCreateFolder}
                             isDisabled={!folderName.trim()}
                             bg='transparent'
                             _pressed={{ bg: 'transparent' }}
