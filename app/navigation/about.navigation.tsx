@@ -1,7 +1,11 @@
 import { Suspense } from 'react'
 import { StatusBar, useColorMode } from 'native-base'
 
+<<<<<<< HEAD
 import { HomeStack } from '../navigator/homeStackNavigator'
+=======
+
+>>>>>>> main
 import { Loading } from '../components/Loading/Loading'
 
 import { useIntl } from '../hooks/useIntl'

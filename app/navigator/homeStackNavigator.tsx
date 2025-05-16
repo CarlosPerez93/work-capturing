@@ -20,6 +20,10 @@ export function HomeStack({ ...props }) {
                     headerStyle: { backgroundColor: bg },
                     headerTintColor: txt,
                     headerTitleStyle: { fontWeight: 'bold' },
+<<<<<<< HEAD
+=======
+                    headerTitleAlign: "center"
+>>>>>>> main
                 }}
             />
             <Screen

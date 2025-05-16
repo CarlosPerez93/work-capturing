@@ -3,6 +3,7 @@ import { FlatList, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 
+<<<<<<< HEAD
 import { createFile, fetchFolders, accesFolder } from '../../utils/functions/functions'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -28,6 +29,36 @@ export const Home = ({ ...props }) => {
 
     const handleFolder = (folderName: string) => {
         console.log(folderName, "entro")
+=======
+import { createFile, fetchFolders } from '../../utils/functions/functions'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamList } from '../../utils/types/types.routes'
+
+
+export const Home = ({ ...props }) => {
+    /* const { colorMode } = useColorMode() */
+    const { bg, txt } = props
+    const [folders, setFolders] = useState<string[]>([])
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [folderName, setFolderName] = useState<string>('')
+    type FolderScreen = StackNavigationProp<RootStackParamList, 'folder'>
+    const navigation = useNavigation<FolderScreen>()
+
+    const fectDataFolder = async () => {
+        const dataFolders = await fetchFolders();
+        if (Array.isArray(dataFolders)) {
+            setFolders(dataFolders);
+
+        } else {
+            console.error("fetchFolders no devolvió un array válido");
+        }
+    }
+
+
+    const handleFolder = (folderName: string) => {
+
+>>>>>>> main
         try {
             navigation.navigate('folder', { params: { folderName } });
         } catch (error) {
@@ -35,13 +66,20 @@ export const Home = ({ ...props }) => {
         }
     }
 
+<<<<<<< HEAD
     const handleCreateFolder = () => {
         try {
             createFile(folderName, () => setIsModalOpen(false));
+=======
+    const handleCreateFolder = async () => {
+        try {
+            await createFile(folderName, () => setIsModalOpen(false));
+>>>>>>> main
         } catch (error) {
             console.error('Error al crear carpeta:', error);
         }
     }
+<<<<<<< HEAD
     return (
         <Box bg={bg} h={'full'} style={{ padding: 30 }}>
             <View style={{ display: "flex", height: '100%', marginTop: 5 }}>
@@ -67,6 +105,49 @@ export const Home = ({ ...props }) => {
                     </TouchableOpacity>
                 )}
             />
+=======
+
+
+    useEffect(() => {
+        fectDataFolder();
+    }, []);
+    return (
+        <Box bg={bg} h={'full'} style={{ padding: 30 }}>
+            <View style={{ display: "flex", marginTop: 5, }}>
+                <Text color={txt} style={{ fontWeight: "900", fontSize: 20 }} >Areas de trabajo.</Text>
+            </View>
+
+            <View style={{ flex: 1, }}>
+                <FlatList
+                    data={folders}
+                    keyExtractor={(item, index) => index.toString()}
+
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => handleFolder(item)}
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginVertical: 8,
+                                backgroundColor: "#3A3737",
+                                height: 50,
+                                borderRadius: 13,
+                                padding: 5
+                            }}
+
+                        >
+
+                            <MaterialIcons name='folder' size={34} color={txt} style={{}} />
+                            <Text ml={2} color={txt} style={{ fontWeight: "800", fontSize: 15, color: "white" }}>
+                                {item}
+                            </Text>
+
+                        </TouchableOpacity>
+
+                    )}
+                />
+            </View>
+>>>>>>> main
             <View style={{ flex: 1 }}>
                 <Button
                     onPress={() => setIsModalOpen(true)}

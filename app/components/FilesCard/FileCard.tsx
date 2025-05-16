@@ -1,24 +1,43 @@
-import { Box, Image, Text } from 'native-base'
+import { Box, Text } from 'native-base'
+import { MaterialIcons } from '@expo/vector-icons'
 import { styles } from './styles'
+type FileCardProps = {
+    name: string | null | undefined;
+    dateFile: string
+}
 
-export const FileCard = () => {
+export const FileCard = ({ name, dateFile }: FileCardProps) => {
+    console.log(name, dateFile)
+    function getIconNameForFile(fileName: string): keyof typeof MaterialIcons.glyphMap {
+        const ext = fileName.split('.').pop()?.toLowerCase();
+
+        if (ext === 'pdf') {
+            return 'picture-as-pdf'; // Asegúrate de que 'picture-as-pdf' esté en el glyphMap
+        } else if (ext === 'doc' || ext === 'docx') {
+            return 'description';
+        } else if (ext === 'jpg' || ext === 'jpeg' || ext === 'png') {
+            return 'image';
+        } else {
+            return 'insert-drive-file';
+        }
+    }
+
     return (
         <Box style={styles.card}>
             <Box height='160' borderRadius='md'>
-                <Image
-                    size='100%'
-                    alt='fallback text'
-                    source={{
-                        uri: 'https://i.pinimg.com/736x/31/90/21/31902191bb8d2bad5db452c1cbc7d726.jpg',
-                    }}
+                <MaterialIcons
+                    name={getIconNameForFile(name ?? "prueba.jpg")}
+                    size={100}
+                    color="white"
                 />
+
             </Box>
 
             <Text fontSize='lg' bold px='4' pb='0'>
-                item1
+                {name}
             </Text>
             <Text fontSize='xs' bold px='4' pb='4'>
-                dd mm yyyy
+                {dateFile}
             </Text>
         </Box>
     )
