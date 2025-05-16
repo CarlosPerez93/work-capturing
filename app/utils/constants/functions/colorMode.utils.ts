@@ -14,3 +14,18 @@ export const colorModeManager: StorageManager = {
     },
     set: async (newItem: any) => await SaveItem({ key, newItem }),
 }
+
+export const colorModeManagerBlack: StorageManager = {
+    get: async () => {
+        try {
+            return 'dark'; // Siempre devuelve "dark"
+        } catch (e) {
+            return 'dark';
+        }
+    },
+    set: async (newItem: any) => {
+        if (newItem === 'dark') {
+            await SaveItem({ key, newItem });
+        }
+    },
+}
