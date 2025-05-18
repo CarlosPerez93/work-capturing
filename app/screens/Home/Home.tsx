@@ -3,7 +3,6 @@ import { FlatList, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 
-<<<<<<< HEAD
 import { createFile, fetchFolders, accesFolder } from '../../utils/functions/functions'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -21,33 +20,11 @@ export const Home = ({ ...props }) => {
     const navigation = useNavigation<FolderScreen>()
 
 
-    useEffect(() => {
-        fetchFolders().then((folders) => setFolders(folders)).catch((error) => {
-            console.error('Error al cargar carpetas:', error);
-        });
-    }, []);
-
-    const handleFolder = (folderName: string) => {
-        console.log(folderName, "entro")
-=======
-import { createFile, fetchFolders } from '../../utils/functions/functions'
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamList } from '../../utils/types/types.routes'
-
-
-export const Home = ({ ...props }) => {
-    /* const { colorMode } = useColorMode() */
-    const { bg, txt } = props
-    const [folders, setFolders] = useState<string[]>([])
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [folderName, setFolderName] = useState<string>('')
-    type FolderScreen = StackNavigationProp<RootStackParamList, 'folder'>
-    const navigation = useNavigation<FolderScreen>()
 
     const fectDataFolder = async () => {
         const dataFolders = await fetchFolders();
         if (Array.isArray(dataFolders)) {
+            console.log(dataFolders, "datafolder")
             setFolders(dataFolders);
 
         } else {
@@ -58,7 +35,6 @@ export const Home = ({ ...props }) => {
 
     const handleFolder = (folderName: string) => {
 
->>>>>>> main
         try {
             navigation.navigate('folder', { params: { folderName } });
         } catch (error) {
@@ -66,51 +42,23 @@ export const Home = ({ ...props }) => {
         }
     }
 
-<<<<<<< HEAD
-    const handleCreateFolder = () => {
-        try {
-            createFile(folderName, () => setIsModalOpen(false));
-=======
     const handleCreateFolder = async () => {
         try {
             await createFile(folderName, () => setIsModalOpen(false));
->>>>>>> main
+            console.log(folders)
         } catch (error) {
             console.error('Error al crear carpeta:', error);
         }
     }
-<<<<<<< HEAD
-    return (
-        <Box bg={bg} h={'full'} style={{ padding: 30 }}>
-            <View style={{ display: "flex", height: '100%', marginTop: 5 }}>
-                <Text color={txt} style={{ fontWeight: "900", fontSize: 25 }} >Areas de trabajo.</Text>
-            </View>
-
-            <FlatList
-                data={folders}
-                keyExtractor={item => item}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        onPress={() => handleFolder(item)}
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginVertical: 8,
-                        }}
-                    >
-                        <MaterialIcons name='folder' size={24} color={txt} />
-                        <Text ml={2} color={txt}>
-                            {item}
-                        </Text>
-                    </TouchableOpacity>
-                )}
-            />
-=======
 
 
     useEffect(() => {
         fectDataFolder();
+        console.log(folders, "carpetas")
     }, []);
+    const pr = [
+        "1", "2", "3"
+    ]
     return (
         <Box bg={bg} h={'full'} style={{ padding: 30 }}>
             <View style={{ display: "flex", marginTop: 5, }}>
@@ -147,7 +95,6 @@ export const Home = ({ ...props }) => {
                     )}
                 />
             </View>
->>>>>>> main
             <View style={{ flex: 1 }}>
                 <Button
                     onPress={() => setIsModalOpen(true)}

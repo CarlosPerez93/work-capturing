@@ -8,11 +8,7 @@ import HomeStackNavigation from './navigation/home.navigation'
 import i18n from './i18n/config'
 import { customTheme } from './utils/constants/theme.constant'
 import { Exo, Poppins } from './utils/constants/fonts.constant'
-<<<<<<< HEAD
-import { colorModeManager } from './utils/constants/functions/colorMode.utils'
-=======
 import { colorModeManager, colorModeManagerBlack } from './utils/constants/functions/colorMode.utils'
->>>>>>> main
 
 export default function App() {
     const { colorMode } = useColorMode()
@@ -21,18 +17,11 @@ export default function App() {
         colors: { dark, light },
     } = customTheme
 
-<<<<<<< HEAD
-    const bg =
-        colorMode === 'dark'
-            ? customTheme.colors.dark.bg
-            : customTheme.colors.light.bg
-=======
     /*  const bg =
          colorMode === 'dark'
              ? customTheme.colors.dark.bg
              : customTheme.colors.light.bg */
     const bg = customTheme.colors.dark.bg
->>>>>>> main
 
     const txt = colorMode === 'light' ? dark.darkContent : light.lightContent
 

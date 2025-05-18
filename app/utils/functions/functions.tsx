@@ -37,10 +37,6 @@ export const fetchFolders = async (): Promise<string[]> => {
         if (info.exists) {
 
             const folderContents = await FileSystem.readDirectoryAsync(routeFolder);
-<<<<<<< HEAD
-=======
-
->>>>>>> main
             return folderContents;
         }
     } catch (error) {
