@@ -9,7 +9,7 @@ export const SelectDarkMode = ({ ...props }) => {
     const nameIcon = colorMode === 'dark' ? 'sun' : 'moon'
 
     const renderIconTheme = () => (
-        <Box bg={bg}>
+        <Box bg={bg} style={{ marginInline: 30 }}>
             <Icon
                 as={Feather}
                 name={nameIcon}

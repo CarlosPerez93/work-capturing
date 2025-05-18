@@ -18,11 +18,11 @@ export default function App() {
     } = customTheme
 
     const bg =
-        colorMode === 'dark'
+        colorMode === 'light'
             ? customTheme.colors.dark.bg
             : customTheme.colors.light.bg
 
-    const txt = colorMode === 'light' ? dark.darkContent : light.lightContent
+    const txt = colorMode === 'dark' ? dark.darkContent : light.lightContent
 
     return loaded ? (
         <I18nextProvider i18n={i18n}>

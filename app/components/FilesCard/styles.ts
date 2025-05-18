@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     card: {
-        width: 200,
-        borderRadius: 10,
         margin: 4,
         padding: 5,
+        width: '48%',
+        borderRadius: 10,
         backgroundColor: customTheme.colors.gray[700],
     },
     contImg: {
