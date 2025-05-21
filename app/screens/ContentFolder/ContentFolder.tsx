@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react'
 import { Box, Button, Icon, useDisclose, Actionsheet } from 'native-base'
 import { Stack } from 'expo-router'
 import { FlatList } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
-import { FileCard } from '../../components/FilesCard/FileCard'
 import { launchCameraAsync } from 'expo-image-picker';
+import { MaterialIcons } from '@expo/vector-icons'
 
 
 import * as DocumentPicker from 'expo-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FileCard } from '../../components/FilesCard/FileCard'
+import { loadFiles, handleUpload, handleTakePhoto } from '../../utils/functions/functions'
 import { styles } from './styles'
 
 type PropsFiles = {
@@ -32,34 +33,27 @@ export const ContentFolder = ({ ...props }) => {
         }
     };
 
-    const loadFiles = async (folderName: string) => {
+    /*  const loadFiles = async (folderName: string) => {
+         try {
+             const filesStr = await AsyncStorage.getItem(`@files_${folderName}`);
+ 
+             if (filesStr) {
+                 return JSON.parse(filesStr);
+             }
+             return [];
+         } catch (error) {
+             console.error('Error al cargar archivossss:', error);
+             return [];
+         }
+     }; */
+
+
+    const handleUploadFile = async () => {
+
         try {
-            const filesStr = await AsyncStorage.getItem(`@files_${folderName}`);
-
-            if (filesStr) {
-                return JSON.parse(filesStr);
-            }
-            return [];
-        } catch (error) {
-            console.error('Error al cargar archivossss:', error);
-            return [];
-        }
-    };
-
-
-    const handleUpload = async () => {
-
-        try {
-            const result = await DocumentPicker.getDocumentAsync({
-                type: '*/*',
-                copyToCacheDirectory: true,
-            });
-
-            if (result.assets) {
-                const newFiles = [...files, { name: result.assets[0].name, dateFile: new Date('2025-06-12') }];
-                setFiles(newFiles);
-                console.log(result.assets[0])
-                await saveFiles(folderName, newFiles);
+            const result = await handleUpload(folderName, files)
+            if (result && result.length > 0) {
+                setFiles(result);
             }
         } catch (error) {
             console.error('Error al seleccionar el archivo:', error);
@@ -68,15 +62,11 @@ export const ContentFolder = ({ ...props }) => {
 
 
     // Función para tomar fotos con la cámara
-    const handleTakePhoto = async () => {
+    const handleTakePhotoSave = async () => {
         try {
-            const photo = await launchCameraAsync({ allowsEditing: true });
-            if (!photo.canceled) {
-                console.log(photo.assets[0].fileName, "fotos")
-                const newFiles = [...files, { name: photo.assets[0].fileName, dateFile: new Date('2025-06-12') }];
-                console.log("datos actuales", newFiles)
-                setFiles(newFiles);
-
+            const result = await handleTakePhoto(files);
+            if (result) {
+                setFiles(result);
             }
             onClose();
         } catch (error) {
@@ -122,10 +112,10 @@ export const ContentFolder = ({ ...props }) => {
                 </Button>
                 <Actionsheet isOpen={isOpen} onClose={onClose}>
                     <Actionsheet.Content>
-                        <Actionsheet.Item onPress={handleUpload}>
+                        <Actionsheet.Item onPress={handleUploadFile}>
                             📂 Subir Archivos
                         </Actionsheet.Item>
-                        <Actionsheet.Item onPress={handleTakePhoto}>
+                        <Actionsheet.Item onPress={handleTakePhotoSave}>
                             📸 Tomar Foto
                         </Actionsheet.Item>
                     </Actionsheet.Content>
